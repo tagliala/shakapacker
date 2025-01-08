@@ -29,7 +29,19 @@ module Shakapacker
 
       # Executes a string or an array of strings in a shell in the given directory in an unbundled environment
       def self.sh_in_dir(dir, *shell_commands)
-        shell_commands.flatten.each { |shell_command| sh %(cd '#{dir}' && #{shell_command.strip}) }
+        shell_commands.flatten.each do |shell_command|
+          command = %(cd '#{dir}' && #{shell_command.strip})
+          puts "Executing command: #{command}" # Debug the actual command being run
+    
+          # Option 1: Using backticks to capture output
+          output = `#{command}`
+          status = $?.success?
+          puts "Command output:\n#{output}"
+          puts "Exit status: #{status}"
+    
+          # Or Option 2: Using system with STDOUT redirect
+          # system(command, out: $stdout, err: :out)
+        end
       end
     end
   end
