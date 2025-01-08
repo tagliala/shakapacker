@@ -12,10 +12,9 @@ TEMP_RAILS_APP_PATH = SPEC_PATH.join("temp-rails-app")
 
 describe "Generator" do
   before :all do
-    # Don't use --skip-git because we want .gitignore file to exist in the project
     sh_in_dir({}, SPEC_PATH, %(
-      rails new base-rails-app --skip-javascript --skip-bundle --skip-spring
-      rm -rf base-rails-app/.git
+      rails new base-rails-app --skip-javascript --skip-bundle --skip-spring --skip-hotwire --skip-git
+      touch base-rails-app/.gitignore
     ))
 
     Bundler.with_unbundled_env do
